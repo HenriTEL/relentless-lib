@@ -12,6 +12,14 @@ type Client struct {
     httpClient *http.Client
 }
 
+
+type CardsResponse struct {
+    Total uint16
+    Page  uint16
+    Limit uint16
+    Cards []Card
+}
+
 func (c *Client) ListCards() ([]Card, error) {
     var cards []Card
     var cards_response CardsResponse
