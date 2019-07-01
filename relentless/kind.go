@@ -14,7 +14,7 @@ type Kind int8
 var (
 	CREATURE     = newKind("CREATURE")
 	SPELL        = newKind("SPELL")
-  UNKNOWN_KIND = newKind("UNKNOWN_KIND")
+	UNKNOWN_KIND = newKind("UNKNOWN_KIND")
 )
 
 func (k Kind) String() string {
