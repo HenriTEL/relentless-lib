@@ -27,15 +27,15 @@ func newKind(s string) Kind {
 }
 
 func toKind(s string) Kind {
-	for i, e := range kinds {
-		if e == s {
+	for i, k := range kinds {
+		if k == s {
 			return Kind(i)
 		}
 	}
 	return UNKNOWN_KIND
 }
 
-// UnmarshalJSON converts a json []byte into a Type
+// UnmarshalJSON converts a json []byte into a Kind
 func (k *Kind) UnmarshalJSON(b []byte) error {
 	var s string
 	if err := json.Unmarshal(b, &s); err != nil {

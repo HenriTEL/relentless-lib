@@ -6,6 +6,7 @@ type Card struct {
 	Cost        uint8
 	Damage      uint8
 	Description string
+	Edition     uint8
 	FlavorText  string `json:"flavor_text"`
 	Frame       string
 	Health      uint8
@@ -18,6 +19,7 @@ type Card struct {
 	Rank        Rank
 	Rarity      string
 	Set         Set
+	Sales       []Sale
 	Type        Type
 	Version     string
 }
