@@ -7,6 +7,8 @@ import (
 	"strconv"
 )
 
+const Nb_editions = 5
+
 type Client struct {
 	ApiEndpoint *url.URL
 }
@@ -41,7 +43,41 @@ func (c *Client) ListCards() ([]Card, error) {
 		if err != nil {
 			panic(err)
 		}
-		cards = append(cards, cards_response.Cards...)
+		for _, card := range cards_response.Cards {
+			for i := 0; i < Nb_editions; i++ {
+				card.Edition = Edition(i)
+				card.SetSales()
+				cards = append(cards, card)
+			}
+		}
 	}
 	return cards, nil
+}
+
+type SalesResponse struct {
+	Sales []Sale `json:"records"`
+}
+
+func (c *Client) ListSales(card_id int) ([]Sale, error) {
+	var sales []Sale
+	var sales_response SalesResponse
+	for page := 1; page < 2 || len(sales_response.Sales) > 0; page += 1 {
+		sales_url := c.ApiEndpoint.ResolveReference(&url.URL{Path: "trade/available-amount",
+			RawQuery: "page=" + strconv.Itoa(page) + "&cardID=" + strconv.Itoa(card_id)})
+		resp, err := http.Get(sales_url.String())
+		if err != nil {
+			return nil, err
+		}
+		defer resp.Body.Close()
+		err = json.NewDecoder(resp.Body).Decode(&sales_response)
+		if err != nil {
+			panic(err)
+		}
+		for _, sale := range sales_response.Sales {
+			sale.Type = DIRECT
+			sale.Currency = ETH
+			sales = append(sales, sale)
+		}
+	}
+	return sales, nil
 }

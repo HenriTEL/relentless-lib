@@ -12,10 +12,10 @@ type Edition int8
 
 // Editions
 var (
-	BACKER          = newEdition("BACKER")
-	BINANCE         = newEdition("BINANCE")
-	LIMITED         = newEdition("LIMITED")
 	STANDARD        = newEdition("STANDARD")
+	BACKER          = newEdition("BACKER")
+	LIMITED         = newEdition("LIMITED")
+	BINANCE         = newEdition("BINANCE")
 	TRON            = newEdition("TRON")
 	UNKNOWN_EDITION = newEdition("UNKNOWN_EDITION")
 )
